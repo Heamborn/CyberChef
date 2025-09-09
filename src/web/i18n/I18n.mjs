@@ -9,7 +9,7 @@
  * 国际化管理类
  */
 class I18n {
-    
+
     /**
      * I18n构造函数
      */
@@ -84,7 +84,7 @@ class I18n {
                 ]
             }
         };
-        
+
         this.supportedLanguages = {
             "en": {
                 "name": "English",
@@ -97,7 +97,7 @@ class I18n {
                 "code": "zh"
             }
         };
-        
+
         this.currentLanguage = this.getStoredLanguage() || this.detectBrowserLanguage() || "en";
         this.fallbackLanguage = "en";
     }
@@ -119,13 +119,13 @@ class I18n {
      */
     detectBrowserLanguage() {
         const browserLang = navigator.language || navigator.userLanguage;
-        const langCode = browserLang.split('-')[0];
-        
+        const langCode = browserLang.split("-")[0];
+
         // 检查是否支持检测到的语言
         if (this.supportedLanguages[langCode]) {
             return langCode;
         }
-        
+
         return null;
     }
 
@@ -134,21 +134,20 @@ class I18n {
      */
     setLanguage(langCode) {
         if (!this.supportedLanguages[langCode]) {
-            console.warn(`Language ${langCode} is not supported`);
             return;
         }
-        
+
         this.currentLanguage = langCode;
-        
+
         // 保存到localStorage
         try {
             const options = JSON.parse(localStorage.getItem("options")) || {};
             options.language = langCode;
             localStorage.setItem("options", JSON.stringify(options));
         } catch (err) {
-            console.warn("Could not save language preference:", err);
+            // Language preference could not be saved
         }
-        
+
         // 触发语言变更事件
         this.onLanguageChange();
     }
@@ -157,15 +156,15 @@ class I18n {
      * 获取翻译文本
      */
     t(key, params = {}) {
-        let translation = this.getTranslation(this.currentLanguage, key) || 
-                         this.getTranslation(this.fallbackLanguage, key) || 
+        let translation = this.getTranslation(this.currentLanguage, key) ||
+                         this.getTranslation(this.fallbackLanguage, key) ||
                          key;
-        
+
         // 参数替换
         Object.keys(params).forEach(param => {
-            translation = translation.replace(new RegExp(`{{${param}}}`, 'g'), params[param]);
+            translation = translation.replace(new RegExp(`{{${param}}}`, "g"), params[param]);
         });
-        
+
         return translation;
     }
 
@@ -175,20 +174,20 @@ class I18n {
     getTranslation(langCode, key) {
         const translations = this.translations[langCode];
         if (!translations) return null;
-        
+
         // 支持点分隔的嵌套键，如 "menu.file.save"
-        const keys = key.split('.');
+        const keys = key.split(".");
         let result = translations;
-        
+
         for (const k of keys) {
-            if (result && typeof result === 'object' && result.hasOwnProperty(k)) {
+            if (result && typeof result === "object" && Object.prototype.hasOwnProperty.call(result, k)) {
                 result = result[k];
             } else {
                 return null;
             }
         }
-        
-        return typeof result === 'string' ? result : null;
+
+        return typeof result === "string" ? result : null;
     }
 
     /**
@@ -211,15 +210,15 @@ class I18n {
     onLanguageChange() {
         // 更新HTML lang属性
         document.documentElement.lang = this.currentLanguage;
-        
+
         // 触发自定义事件
-        const event = new CustomEvent('languageChanged', {
+        const event = new CustomEvent("languageChanged", {
             detail: {
                 language: this.currentLanguage,
                 translations: this.translations[this.currentLanguage]
             }
         });
-        
+
         document.dispatchEvent(event);
     }
 
@@ -228,12 +227,12 @@ class I18n {
      */
     updatePage() {
         // 更新所有带有data-i18n属性的元素
-        const elements = document.querySelectorAll('[data-i18n]');
+        const elements = document.querySelectorAll("[data-i18n]");
         elements.forEach(element => {
-            const key = element.getAttribute('data-i18n');
+            const key = element.getAttribute("data-i18n");
             const translation = this.t(key);
-            
-            if (element.tagName === 'INPUT' && (element.type === 'text' || element.type === 'search')) {
+
+            if (element.tagName === "INPUT" && (element.type === "text" || element.type === "search")) {
                 element.placeholder = translation;
             } else {
                 element.textContent = translation;
@@ -241,20 +240,28 @@ class I18n {
         });
 
         // 更新带有data-i18n-title的元素（tooltip等）
-        const titleElements = document.querySelectorAll('[data-i18n-title]');
+        const titleElements = document.querySelectorAll("[data-i18n-title]");
         titleElements.forEach(element => {
-            const key = element.getAttribute('data-i18n-title');
+            const key = element.getAttribute("data-i18n-title");
             const translation = this.t(key);
             element.title = translation;
-            element.setAttribute('data-original-title', translation);
+            element.setAttribute("data-original-title", translation);
         });
 
         // 更新带有data-i18n-aria-label的元素
-        const ariaElements = document.querySelectorAll('[data-i18n-aria-label]');
+        const ariaElements = document.querySelectorAll("[data-i18n-aria-label]");
         ariaElements.forEach(element => {
-            const key = element.getAttribute('data-i18n-aria-label');
+            const key = element.getAttribute("data-i18n-aria-label");
             const translation = this.t(key);
-            element.setAttribute('aria-label', translation);
+            element.setAttribute("aria-label", translation);
+        });
+
+        // 更新带有data-i18n-placeholder的元素
+        const placeholderElements = document.querySelectorAll("[data-i18n-placeholder]");
+        placeholderElements.forEach(element => {
+            const key = element.getAttribute("data-i18n-placeholder");
+            const translation = this.t(key);
+            element.placeholder = translation;
         });
     }
 }

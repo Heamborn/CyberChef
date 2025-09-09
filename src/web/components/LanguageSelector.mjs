@@ -9,7 +9,7 @@
  * 语言选择器组件类
  */
 class LanguageSelector {
-    
+
     /**
      * 构造函数
      */
@@ -24,7 +24,7 @@ class LanguageSelector {
     create() {
         const supportedLanguages = this.i18n.getSupportedLanguages();
         const currentLanguage = this.i18n.getCurrentLanguage();
-        
+
         const selectorHtml = `
             <div class="language-selector dropdown">
                 <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,16 +33,16 @@ class LanguageSelector {
                 </button>
                 <div class="dropdown-menu" aria-labelledby="languageDropdown">
                     ${Object.keys(supportedLanguages).map(langCode => `
-                        <a class="dropdown-item language-option ${langCode === currentLanguage ? 'active' : ''}" 
-                           href="#" 
+                        <a class="dropdown-item language-option ${langCode === currentLanguage ? "active" : ""}"
+                           href="#"
                            data-lang="${langCode}">
                             ${supportedLanguages[langCode].nativeName}
                         </a>
-                    `).join('')}
+                    `).join("")}
                 </div>
             </div>
         `;
-        
+
         return selectorHtml;
     }
 
@@ -50,18 +50,17 @@ class LanguageSelector {
      * 渲染到指定容器
      */
     render(container) {
-        if (typeof container === 'string') {
+        if (typeof container === "string") {
             container = document.getElementById(container);
         }
-        
+
         if (!container) {
-            console.warn('Language selector container not found');
             return;
         }
-        
+
         container.innerHTML = this.create();
-        this.element = container.querySelector('.language-selector');
-        
+        this.element = container.querySelector(".language-selector");
+
         // 绑定事件
         this.bindEvents();
     }
@@ -71,13 +70,13 @@ class LanguageSelector {
      */
     bindEvents() {
         if (!this.element) return;
-        
-        const languageOptions = this.element.querySelectorAll('.language-option');
-        
+
+        const languageOptions = this.element.querySelectorAll(".language-option");
+
         languageOptions.forEach(option => {
-            option.addEventListener('click', (e) => {
+            option.addEventListener("click", (e) => {
                 e.preventDefault();
-                const selectedLang = e.target.getAttribute('data-lang');
+                const selectedLang = e.target.getAttribute("data-lang");
                 this.changeLanguage(selectedLang);
             });
         });
@@ -90,13 +89,13 @@ class LanguageSelector {
         if (langCode === this.i18n.getCurrentLanguage()) {
             return; // 相同语言，无需切换
         }
-        
+
         // 更新i18n语言
         this.i18n.setLanguage(langCode);
-        
+
         // 更新UI
         this.updateUI();
-        
+
         // 更新页面文本
         this.i18n.updatePage();
     }
@@ -106,24 +105,24 @@ class LanguageSelector {
      */
     updateUI() {
         if (!this.element) return;
-        
+
         const supportedLanguages = this.i18n.getSupportedLanguages();
         const currentLanguage = this.i18n.getCurrentLanguage();
-        
+
         // 更新当前显示的语言
-        const currentLangElement = this.element.querySelector('.current-language');
+        const currentLangElement = this.element.querySelector(".current-language");
         if (currentLangElement) {
             currentLangElement.textContent = supportedLanguages[currentLanguage].nativeName;
         }
-        
+
         // 更新active状态
-        const languageOptions = this.element.querySelectorAll('.language-option');
+        const languageOptions = this.element.querySelectorAll(".language-option");
         languageOptions.forEach(option => {
-            const langCode = option.getAttribute('data-lang');
+            const langCode = option.getAttribute("data-lang");
             if (langCode === currentLanguage) {
-                option.classList.add('active');
+                option.classList.add("active");
             } else {
-                option.classList.remove('active');
+                option.classList.remove("active");
             }
         });
     }
@@ -132,7 +131,7 @@ class LanguageSelector {
      * 监听语言变化事件
      */
     listenForLanguageChanges() {
-        document.addEventListener('languageChanged', () => {
+        document.addEventListener("languageChanged", () => {
             this.updateUI();
         });
     }

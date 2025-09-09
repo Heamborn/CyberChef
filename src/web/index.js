@@ -31,7 +31,7 @@ import LanguageSelector from "./components/LanguageSelector.mjs";
 function main() {
     // Initialize internationalization
     window.i18n = new I18n();
-    
+
     const defaultFavourites = [
         "To Base64",
         "From Base64",
@@ -65,13 +65,13 @@ function main() {
 
     document.removeEventListener("DOMContentLoaded", main, false);
     window.app = new App(Categories, OperationConfig, defaultFavourites, defaultOptions);
-    
+
     // Initialize language selector
     window.languageSelector = new LanguageSelector(window.i18n);
-    
+
     // Setup app
     window.app.setup();
-    
+
     // Setup internationalization after app is loaded
     setupI18n();
 }
@@ -81,12 +81,12 @@ function main() {
  */
 function setupI18n() {
     // 渲染语言选择器
-    window.languageSelector.render('language-selector-container');
+    window.languageSelector.render("language-selector-container");
     window.languageSelector.listenForLanguageChanges();
-    
+
     // 更新加载消息为多语言
     updateLoadingMessages();
-    
+
     // 初始化页面翻译
     setTimeout(() => {
         window.i18n.updatePage();
@@ -98,10 +98,10 @@ function setupI18n() {
  */
 function updateLoadingMessages() {
     // 如果加载消息还在显示，用翻译后的消息替换
-    const loadingMessages = window.i18n.t('loading_messages');
+    const loadingMessages = window.i18n.t("loading_messages");
     if (Array.isArray(loadingMessages) && loadingMessages.length > 0) {
         // 替换全局的loadingMsgs数组（如果存在）
-        if (typeof window.loadingMsgs !== 'undefined') {
+        if (typeof window.loadingMsgs !== "undefined") {
             window.loadingMsgs = [...loadingMessages];
         }
     }
