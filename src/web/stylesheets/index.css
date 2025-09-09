@@ -25,7 +25,6 @@
 @import "./components/_list.css";
 @import "./components/_operation.css";
 @import "./components/_pane.css";
-@import "./components/_language-selector.css";
 
 /* Layout */
 @import "./layout/_banner.css";

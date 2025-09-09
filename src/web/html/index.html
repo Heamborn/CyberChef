@@ -20,13 +20,13 @@
 -->
 <!-- htmlmin:ignore -->
 <!DOCTYPE html>
-<html lang="en" class="classic" data-i18n-lang="{{currentLang}}">
+<html lang="en" class="classic">
     <head>
         <meta charset="UTF-8">
         <title>CyberChef</title>
 
         <meta name="copyright" content="Crown Copyright 2016-<%= htmlWebpackPlugin.options.compileYear %>" />
-        <meta name="description" content="The Cyber Swiss Army Knife - a web app for encryption, encoding, compression and data analysis" data-i18n-content="header.subtitle" />
+        <meta name="description" content="The Cyber Swiss Army Knife - a web app for encryption, encoding, compression and data analysis" />
         <meta name="keywords" content="base64, hex, decode, encode, encrypt, decrypt, compress, decompress, regex, regular expressions, hash, crypt, hexadecimal, user agent, url, certificate, x.509, parser, JSON, gzip,  md5, sha1, aes, des, blowfish, xor" />
 
         <link rel="icon" type="image/ico" href="<%- require('../static/images/favicon.ico') %>" />
@@ -142,13 +142,13 @@
             <div id="preloader-error" class="loading-error"></div>
         </div>
         <!-- End preloader overlay -->
-        <button type="button" aria-label="Edit Favourites" class="btn btn-warning bmd-btn-icon" id="edit-favourites" data-toggle="tooltip" title="Edit favourites" data-i18n-aria-label="operations.edit_favourites" data-i18n-title="operations.edit_favourites">
+        <button type="button" aria-label="Edit Favourites" class="btn btn-warning bmd-btn-icon" id="edit-favourites" data-toggle="tooltip" title="Edit favourites">
             <i class="material-icons" aria-hidden="true">star</i>
         </button>
         <div id="content-wrapper">
             <div id="banner" class="row">
                 <div class="col" style="text-align: left; padding-left: 10px;">
-                    <a href="#" data-toggle="modal" data-target="#download-modal" data-help-title="Downloading CyberChef" data-help="<p>CyberChef can be downloaded to run locally or hosted within your own network. It has no server-side component so all that is required is that the ZIP file is uncompressed and the files are accessible.</p><p>As a user, it is worth noting that unofficial versions of CyberChef could have been modified to introduce Input and/or Recipe exfiltration. We recommend always using the official, open source, up-to-date version of CyberChef hosted at <a href='https://gchq.github.io/CyberChef'>https://gchq.github.io/CyberChef</a> if accessible.</p><p>The Network tab in your browser's Developer console (F12) can be used to inspect the network requests made by a website. This can confirm that no data is uploaded when a CyberChef recipe is baked.</p>" data-i18n="header.download">Download CyberChef <i class="material-icons">file_download</i></a>
+                    <a href="#" data-toggle="modal" data-target="#download-modal" data-help-title="Downloading CyberChef" data-help="<p>CyberChef can be downloaded to run locally or hosted within your own network. It has no server-side component so all that is required is that the ZIP file is uncompressed and the files are accessible.</p><p>As a user, it is worth noting that unofficial versions of CyberChef could have been modified to introduce Input and/or Recipe exfiltration. We recommend always using the official, open source, up-to-date version of CyberChef hosted at <a href='https://gchq.github.io/CyberChef'>https://gchq.github.io/CyberChef</a> if accessible.</p><p>The Network tab in your browser's Developer console (F12) can be used to inspect the network requests made by a website. This can confirm that no data is uploaded when a CyberChef recipe is baked.</p>">Download CyberChef <i class="material-icons">file_download</i></a>
                 </div>
                 <div class="col-md-6" id="notice-wrapper">
                     <span id="notice">
@@ -163,25 +163,24 @@
                     </span>
                 </div>
                 <div class="col" style="text-align: right; padding-right: 0;">
-                    <div id="language-selector-container" style="display: inline-block; margin-right: 15px;"></div>
-                    <a href="#" id="options" data-help-title="Options and Settings" data-help="Configurable options to change how CyberChef behaves. These settings are stored in your browser's local storage, meaning they will persist between sessions that use the same browser profile." data-i18n="header.options">Options <i class="material-icons">settings</i></a>
-                    <a href="#" id="support" data-toggle="modal" data-target="#support-modal" data-help-title="About / Support" data-help="This pane provides information about the CyberChef web app, how to use some of the features, and how to raise bug reports." data-i18n="header.about">About / Support <i class="material-icons">help</i></a>
+                    <a href="#" id="options" data-help-title="Options and Settings" data-help="Configurable options to change how CyberChef behaves. These settings are stored in your browser's local storage, meaning they will persist between sessions that use the same browser profile.">Options <i class="material-icons">settings</i></a>
+                    <a href="#" id="support" data-toggle="modal" data-target="#support-modal" data-help-title="About / Support" data-help="This pane provides information about the CyberChef web app, how to use some of the features, and how to raise bug reports.">About / Support <i class="material-icons">help</i></a>
                 </div>
             </div>
             <div id="workspace-wrapper">
                 <div id="operations" class="split split-horizontal no-select">
                     <div class="title no-select" data-help-title="Operations list" data-help="<p>The Operations list contains all the operations in CyberChef arranged into categories. Some operations may be present in multiple categories. You can search for operations using the search box.</p><p>To use an operation, either double click it, or drag it into the Recipe pane. You will then be able to configure its arguments (or 'Ingredients' in CyberChef terminology).</p>">
-                        <span data-i18n="operations.title">Operations</span>
+                        Operations
                         <span class="op-count"></span>
                     </div>
-                    <input id="search" type="search" class="form-control" placeholder="Search..." autocomplete="off" tabindex="2" data-help-title="Searching for operations" data-help="<p>Use the search box to find useful operations.</p><p>Both operation names and descriptions are queried using a fuzzy matching algorithm.</p>" data-i18n-placeholder="operations.search_placeholder">
+                    <input id="search" type="search" class="form-control" placeholder="Search..." autocomplete="off" tabindex="2" data-help-title="Searching for operations" data-help="<p>Use the search box to find useful operations.</p><p>Both operation names and descriptions are queried using a fuzzy matching algorithm.</p>">
                     <ul id="search-results" class="op-list"></ul>
                     <div id="categories" class="panel-group no-select"></div>
                 </div>
 
                 <div id="recipe" class="split split-horizontal no-select" data-help-title="Recipe pane" data-help="<p>The Recipe pane is where your chosen Operations are configured. If you are a programmer, think of these as functions. If you are not a programmer, these are like steps in a cake recipe. The Input data will be processed based on the Operations in your Recipe.</p><ul><li>To reorder, simply drag and drop the Operations into the order your require</li><li>To remove an operation, either double click it, or drag it outside of the Recipe pane</li></ul><p>The arguments (or 'Ingredients' in CyberChef terminology) can be configured to change how an Operation processes the data.</p>">
                     <div class="title no-select">
-                        <span data-i18n="recipe.title">Recipe</span>
+                        Recipe
                         <span class="pane-controls hide-on-maximised-output">
                             <button type="button" aria-label="Hide arguments" class="btn btn-primary bmd-btn-icon" id="hide-icon" data-toggle="tooltip" title="Hide arguments" hide-args="false" data-help-title="Hiding every Operation's argument view in a Recipe" data-help="Clicking 'Hide arguments' will hide all the argument views for every Operation in the Recipe, to save space when you have too many Operation in your Recipe">
                                 <i class="material-icons">keyboard_arrow_up</i>
