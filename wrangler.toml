@@ -1,0 +1,9 @@
+name = "cyberchef"
+compatibility_date = "2023-10-30"
+
+# Pages 项目配置
+[env.production]
+compatibility_date = "2023-10-30"
+
+# 这个文件主要用于 wrangler CLI 部署
+# 对于通过 GitHub 集成的部署，主要配置在 Cloudflare 控制台中设置
