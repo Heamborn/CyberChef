@@ -73,16 +73,34 @@ function main() {
     window.app.setup();
 
     // Setup internationalization after app is loaded
-    setupI18n();
+    // Use setTimeout to ensure DOM is fully ready
+    setTimeout(() => {
+        setupI18n();
+    }, 100);
 }
 
 /**
  * 设置国际化系统
  */
 function setupI18n() {
+    // 检查容器是否存在
+    const container = document.getElementById("language-selector-container");
+    if (!container) {
+        // Container not found, language selector won't be available
+        return;
+    }
+    
     // 渲染语言选择器
-    window.languageSelector.render("language-selector-container");
-    window.languageSelector.listenForLanguageChanges();
+    try {
+        window.languageSelector.render("language-selector-container");
+        window.languageSelector.listenForLanguageChanges();
+        
+        // 设置一个全局标识符表示语言选择器已初始化
+        window.languageSelectorReady = true;
+    } catch (error) {
+        // Language selector initialization failed
+        window.languageSelectorReady = false;
+    }
 
     // 更新加载消息为多语言
     updateLoadingMessages();
@@ -90,7 +108,7 @@ function setupI18n() {
     // 初始化页面翻译
     setTimeout(() => {
         window.i18n.updatePage();
-    }, 100);
+    }, 200);
 }
 
 /**
